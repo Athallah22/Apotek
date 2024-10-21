@@ -1,0 +1,1 @@
+Aplikasi Apotek adalah aplikasi mobile yang dirancang untuk memudahkan pengguna dalam memesan obat, mencari apotek terdekat, serta melacak riwayat pembelian obat mereka. Aplikasi ini ditujukan untuk masyarakat yang tinggal di daerah non-perkotaan, sehingga dapat dengan mudah mengakses apotek terdekat dan memperoleh obat-obatan dengan lebih cepat dan efisien.
