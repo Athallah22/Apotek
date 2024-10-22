@@ -12,9 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.cover) // Layout untuk cover
+        setContentView(R.layout.cover)
 
-        // Button untuk berpindah ke LoginActivity
         val mulaiButton: Button = findViewById(R.id.mulai)
         mulaiButton.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)

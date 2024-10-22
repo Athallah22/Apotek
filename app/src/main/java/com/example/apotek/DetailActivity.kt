@@ -33,7 +33,7 @@ class DetailActivity : AppCompatActivity() {
         binding.product = product
 
         // Tambahkan listener untuk tombol "Tambahkan ke Keranjang"
-        binding.tocart.setOnClickListener {
+        binding.buynow.setOnClickListener {
             addToCart(product)
         }
     }

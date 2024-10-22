@@ -45,18 +45,18 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#00EAFF">
+            android:background="#FFFFFF">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/product1"
                 android:layout_width="145dp"
                 android:layout_height="270dp"
-                android:layout_margin="16dp"
-                app:cardBackgroundColor="@android:color/white"
+                android:layout_margin="40dp"
+                android:background="@drawable/border"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/searchView"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="MissingConstraints">
 
                 <LinearLayout
@@ -76,28 +76,29 @@
 
                     <TextView
                         android:id="@+id/productName1"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="Obat 1"
+                        android:textAlignment="center"
                         android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/productPrice1"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="8dp"
                         android:text="$15"
+                        android:textAlignment="center"
                         android:textColor="@android:color/holo_red_dark"
                         android:textSize="16sp" />
 
                     <Button
-                        android:id="@+id/buttonAdd1"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:backgroundTint="@android:color/holo_green_light"
-                        android:text="ADD" />
+                        android:backgroundTint="#00EAFF"
+                        android:text="Beli"
+                        android:textColor="@color/black" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -106,12 +107,12 @@
                 android:id="@+id/product2"
                 android:layout_width="145dp"
                 android:layout_height="270dp"
-                android:layout_margin="16dp"
+                android:layout_margin="40dp"
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/searchView"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="MissingConstraints">
 
                 <LinearLayout
@@ -131,28 +132,29 @@
 
                     <TextView
                         android:id="@+id/productName2"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="Obat 2"
+                        android:textAlignment="center"
                         android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/productPrice2"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="8dp"
                         android:text="$15"
+                        android:textAlignment="center"
                         android:textColor="@android:color/holo_red_dark"
                         android:textSize="16sp" />
 
                     <Button
-                        android:id="@+id/buttonAdd2"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:backgroundTint="@android:color/holo_green_light"
-                        android:text="ADD" />
+                        android:backgroundTint="#00EAFF"
+                        android:text="Beli"
+                        android:textColor="@color/black" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -161,7 +163,7 @@
                 android:id="@+id/product3"
                 android:layout_width="145dp"
                 android:layout_height="270dp"
-                android:layout_margin="16dp"
+                android:layout_margin="40dp"
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp"
@@ -186,28 +188,29 @@
 
                     <TextView
                         android:id="@+id/productName3"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:textAlignment="center"
                         android:text="Obat 3"
                         android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/productPrice3"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
+                        android:textAlignment="center"
+                        android:layout_marginTop="8dp"
                         android:text="$15"
                         android:textColor="@android:color/holo_red_dark"
                         android:textSize="16sp" />
 
                     <Button
-                        android:id="@+id/buttonAdd3"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:backgroundTint="@android:color/holo_green_light"
-                        android:text="ADD" />
+                        android:backgroundTint="#00EAFF"
+                        android:text="Beli"
+                        android:textColor="@color/black" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -216,7 +219,7 @@
                 android:id="@+id/product4"
                 android:layout_width="145dp"
                 android:layout_height="270dp"
-                android:layout_margin="16dp"
+                android:layout_margin="40dp"
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp"
@@ -241,28 +244,29 @@
 
                     <TextView
                         android:id="@+id/productName4"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:textAlignment="center"
                         android:text="Obat 4"
                         android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/productPrice4"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="8dp"
+                        android:textAlignment="center"
                         android:text="$15"
                         android:textColor="@android:color/holo_red_dark"
                         android:textSize="16sp" />
 
                     <Button
-                        android:id="@+id/buttonAdd4"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:backgroundTint="@android:color/holo_green_light"
-                        android:text="ADD" />
+                        android:backgroundTint="#00EAFF"
+                        android:text="Beli"
+                        android:textColor="@color/black" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -271,7 +275,7 @@
                 android:id="@+id/product5"
                 android:layout_width="145dp"
                 android:layout_height="270dp"
-                android:layout_margin="16dp"
+                android:layout_margin="40dp"
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp"
@@ -296,28 +300,29 @@
 
                     <TextView
                         android:id="@+id/productName5"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:textAlignment="center"
                         android:text="Obat 5"
                         android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/productPrice5"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="8dp"
+                        android:textAlignment="center"
                         android:text="$15"
                         android:textColor="@android:color/holo_red_dark"
                         android:textSize="16sp" />
 
                     <Button
-                        android:id="@+id/buttonAdd5"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:backgroundTint="@android:color/holo_green_light"
-                        android:text="ADD" />
+                        android:backgroundTint="#00EAFF"
+                        android:text="Beli"
+                        android:textColor="@color/black" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -326,7 +331,7 @@
                 android:id="@+id/product6"
                 android:layout_width="145dp"
                 android:layout_height="270dp"
-                android:layout_margin="16dp"
+                android:layout_margin="40dp"
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp"
@@ -351,33 +356,32 @@
 
                     <TextView
                         android:id="@+id/productName6"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:textAlignment="center"
                         android:text="Oabt 6"
                         android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/productPrice6"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="8dp"
+                        android:textAlignment="center"
                         android:text="$15"
                         android:textColor="@android:color/holo_red_dark"
                         android:textSize="16sp" />
 
                     <Button
-                        android:id="@+id/buttonAdd6"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:backgroundTint="@android:color/holo_green_light"
-                        android:text="ADD" />
+                        android:backgroundTint="#00EAFF"
+                        android:text="Beli"
+                        android:textColor="@color/black" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </RelativeLayout>

@@ -6,7 +6,7 @@
     android:id="@+id/coverLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00EAFF"
+    android:background="#FFFFFF"
     android:padding="20dp"
     tools:context=".MainActivity">
 
@@ -41,7 +41,7 @@
         android:layout_marginTop="150dp"
         android:text="MULAI"
         android:textColor="@color/black"
-        android:backgroundTint="@android:color/white"
+        android:backgroundTint="#00EAFF"
         app:layout_constraintEnd_toEndOf="@+id/imageView2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/imageView2"
