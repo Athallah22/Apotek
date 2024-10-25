@@ -9,10 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 
 class KeranjangActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
+    private var totalHarga: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.keranjang) // Pastikan layout untuk activity_cart.xml sudah dibuat
+        setContentView(R.layout.keranjang) // Pastikan layout untuk keranjang.xml sudah dibuat
 
         sharedPreferences = getSharedPreferences("cart_prefs", Context.MODE_PRIVATE)
 
@@ -20,12 +21,23 @@ class KeranjangActivity : AppCompatActivity() {
         val itemName = sharedPreferences.getString("cart_item_name", "Tidak ada item")
         val itemPrice = sharedPreferences.getString("cart_item_price", "N/A")
         val itemImageResId = sharedPreferences.getInt("cart_item_image", 0)
-        val itemDescription = sharedPreferences.getString("cart_item_description", "Tidak ada deskripsi")
 
         // Tampilkan data di layout
         findViewById<TextView>(R.id.cartItemName).text = itemName
         findViewById<TextView>(R.id.cartItemPrice).text = itemPrice
         findViewById<ImageView>(R.id.cartItemImage).setImageResource(itemImageResId)
-        findViewById<TextView>(R.id.cartItemDescription).text = itemDescription
+
+        // Hitung total harga
+        val priceString = itemPrice?.replace("Rp. ", "")?.replace(".", "") // Menghapus simbol Rp. dan titik
+        val itemPriceInt = priceString?.toIntOrNull() ?: 0 // Mengubah ke Int, default ke 0
+        totalHarga += itemPriceInt // Menambahkan harga item ke total harga
+
+        // Tampilkan total harga di layout
+        findViewById<TextView>(R.id.totalPrice).text = "$ ${totalHarga.format()}"
+    }
+
+    // Fungsi untuk memformat angka ke format IDR
+    private fun Int.format(): String {
+        return String.format("%,d", this).replace(",", ".")
     }
 }

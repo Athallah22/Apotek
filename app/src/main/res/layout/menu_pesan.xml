@@ -52,10 +52,10 @@
                 android:layout_width="145dp"
                 android:layout_height="270dp"
                 android:layout_margin="40dp"
-                android:background="@drawable/border"
+                app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="MissingConstraints">
 
@@ -94,6 +94,7 @@
                         android:textSize="16sp" />
 
                     <Button
+                        android:id="@+id/beli1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="#00EAFF"
@@ -108,10 +109,10 @@
                 android:layout_width="145dp"
                 android:layout_height="270dp"
                 android:layout_margin="40dp"
-                app:cardBackgroundColor="@android:color/white"
+                android:background="@drawable/border"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="MissingConstraints">
 
@@ -150,6 +151,7 @@
                         android:textSize="16sp" />
 
                     <Button
+                        android:id="@+id/beli2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="#00EAFF"
@@ -206,6 +208,7 @@
                         android:textSize="16sp" />
 
                     <Button
+                        android:id="@+id/beli3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="#00EAFF"
@@ -262,6 +265,7 @@
                         android:textSize="16sp" />
 
                     <Button
+                        android:id="@+id/beli4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="#00EAFF"
@@ -318,6 +322,7 @@
                         android:textSize="16sp" />
 
                     <Button
+                        android:id="@+id/beli5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="#00EAFF"
@@ -374,6 +379,7 @@
                         android:textSize="16sp" />
 
                     <Button
+                        android:id="@+id/beli6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="#00EAFF"
