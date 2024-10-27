@@ -1,8 +1,6 @@
-package com.example.apotek
-
 data class CartItem(
     val name: String,
-    val price: String,
+    val price: Int,
     val imageResId: Int,
-    val description: String
+    var quantity: Int = 0
 )

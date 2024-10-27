@@ -1,76 +1,94 @@
 package com.example.apotek
 
-import android.content.Context
-import android.content.SharedPreferences
+import KeranjangDB
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 class KeranjangActivity : AppCompatActivity() {
-    private lateinit var sharedPreferences: SharedPreferences
-    private var totalHarga: Int = 0
-    private var itemCount: Int = 1 // Jumlah item, default 1
+    private lateinit var keranjangDB: KeranjangDB
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.keranjang) // Pastikan layout untuk keranjang.xml sudah dibuat
+        setContentView(R.layout.keranjang)
 
-        sharedPreferences = getSharedPreferences("cart_prefs", Context.MODE_PRIVATE)
+        // Initialize database
+        keranjangDB = KeranjangDB(this)
 
-        // Ambil data dari SharedPreferences
-        val itemName = sharedPreferences.getString("cart_item_name", "Tidak ada item")
-        val itemPrice = sharedPreferences.getString("cart_item_price", "Rp. 0")
-        val itemImageResId = sharedPreferences.getInt("cart_item_image", 0)
+        // Get all cart items
+        val cartItems = keranjangDB.getAllCartItems()
 
-        // Tampilkan data di layout
-        findViewById<TextView>(R.id.cartItemName).text = itemName
-        findViewById<TextView>(R.id.cartItemPrice).text = itemPrice
-        findViewById<ImageView>(R.id.cartItemImage).setImageResource(itemImageResId)
+        // Reference to the container where items will be added
+        val cartItemsContainer = findViewById<LinearLayout>(R.id.cartItemsContainer)
 
-        // Hitung total harga
-        val priceString = itemPrice?.replace("Rp. ", "")?.replace(".", "") // Menghapus simbol Rp. dan titik
-        val itemPriceInt = priceString?.toIntOrNull() ?: 0 // Mengubah ke Int, default ke 0
-        totalHarga = itemPriceInt * itemCount // Menghitung total harga berdasarkan jumlah item
+        // Clear the container to prevent duplication
+        cartItemsContainer.removeAllViews()
 
-        // Tampilkan total harga di layout
-        findViewById<TextView>(R.id.totalPrice).text = "Rp.  ${totalHarga.format()}"
+        // Display each item in the cart
+        for (item in cartItems) {
+            // Inflate the cart_item layout instead of the full keranjang layout
+            val cartItemView = layoutInflater.inflate(R.layout.cart_item, cartItemsContainer, false)
 
-        // Inisialisasi tombol
-        val increaseButton: ImageButton = findViewById(R.id.increaseButton)
-        val decreaseButton: ImageButton = findViewById(R.id.decreaseButton)
-        val removeItemButton: ImageButton = findViewById(R.id.removeItemButton)
+            // Set item details
+            val itemImage = cartItemView.findViewById<ImageView>(R.id.cartItemImage)
+            val itemName = cartItemView.findViewById<TextView>(R.id.cartItemName)
+            val itemPrice = cartItemView.findViewById<TextView>(R.id.cartItemPrice)
+            val itemQuantity = cartItemView.findViewById<TextView>(R.id.banyakItem)
 
-        // Set listener untuk tombol tambah
-        increaseButton.setOnClickListener {
-            itemCount++
-            updateTotalPrice(itemPriceInt)
-        }
+            itemImage.setImageResource(item.imageResId)
+            itemName.text = item.name
+            itemPrice.text = "Rp. ${item.price}"
+            itemQuantity.text = "1"
 
-        // Set listener untuk tombol kurang
-        decreaseButton.setOnClickListener {
-            if (itemCount > 1) {
-                itemCount--
-                updateTotalPrice(itemPriceInt)
+            // Handle button clicks
+            val removeButton = cartItemView.findViewById<ImageButton>(R.id.removeItemButton)
+            val increaseButton = cartItemView.findViewById<ImageButton>(R.id.increaseButton)
+            val decreaseButton = cartItemView.findViewById<ImageButton>(R.id.decreaseButton)
+
+            removeButton.setOnClickListener {
+                keranjangDB.removeItemFromCart(item)
+                cartItemsContainer.removeView(cartItemView)
+                updateTotalPrice()
             }
+
+            increaseButton.setOnClickListener {
+                val currentQuantity = itemQuantity.text.toString().toInt()
+                itemQuantity.text = (currentQuantity + 1).toString()
+                updateTotalPrice()
+            }
+
+            decreaseButton.setOnClickListener {
+                val currentQuantity = itemQuantity.text.toString().toInt()
+                if (currentQuantity > 1) {
+                    itemQuantity.text = (currentQuantity - 1).toString()
+                    updateTotalPrice()
+                }
+            }
+
+            // Add the inflated view to the container
+            cartItemsContainer.addView(cartItemView)
         }
 
-        // Set listener untuk tombol hapus item
-        removeItemButton.setOnClickListener {
-            // Menghapus item dari keranjang
-            finish() // Kembali ke activity sebelumnya
+        // Initialize total price
+        updateTotalPrice()
+    }
+
+    private fun updateTotalPrice() {
+        var total = 0
+        val cartItemsContainer = findViewById<LinearLayout>(R.id.cartItemsContainer)
+
+        for (i in 0 until cartItemsContainer.childCount) {
+            val itemView = cartItemsContainer.getChildAt(i)
+            val priceText = itemView.findViewById<TextView>(R.id.cartItemPrice).text.toString()
+            val quantity = itemView.findViewById<TextView>(R.id.banyakItem).text.toString().toInt()
+
+            val price = priceText.replace("Rp. ", "").toInt()
+            total += price * quantity
         }
-    }
 
-    private fun updateTotalPrice(itemPriceInt: Int) {
-        totalHarga = itemPriceInt * itemCount // Hitung total harga
-        findViewById<TextView>(R.id.totalPrice).text = "Rp.  ${totalHarga.format()}" // Perbarui tampilan total harga
-        findViewById<TextView>(R.id.banyakItem).text = "$itemCount" // Perbarui jumlah item di tampilan
-    }
-
-    // Fungsi untuk memformat angka ke format IDR
-    private fun Int.format(): String {
-        return String.format("%,d", this).replace(",", ".")
+        findViewById<TextView>(R.id.totalPrice).text = "Rp. $total"
     }
 }

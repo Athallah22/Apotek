@@ -1,5 +1,6 @@
 package com.example.apotek
 
+import KeranjangDB
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -12,7 +13,7 @@ import com.example.apotek.databinding.DetailObatBinding
 class DetailActivity : AppCompatActivity() {
     private lateinit var cartIcon: ImageButton
     private lateinit var binding: DetailObatBinding
-    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var keranjangDB: KeranjangDB
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,8 +22,8 @@ class DetailActivity : AppCompatActivity() {
         binding = DetailObatBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Inisialisasi SharedPreferences
-        sharedPreferences = getSharedPreferences("cart_prefs", Context.MODE_PRIVATE)
+        // Inisialisasi database
+        keranjangDB = KeranjangDB(this)
 
         // Mengambil data dari Intent
         val name = intent.getStringExtra("EXTRA_NAME") ?: "N/A"
@@ -48,14 +49,13 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun addToCart(product: Product) {
-        val editor = sharedPreferences.edit()
-        editor.putString("cart_item_name", product.name)
-        editor.putString("cart_item_price", product.price)
-        editor.putInt("cart_item_image", product.imageResId)
-        editor.putString("cart_item_description", product.description)
-        editor.apply()
-
-        // Menampilkan Toast untuk konfirmasi
-        Toast.makeText(this, "${product.name} telah ditambahkan ke keranjang", Toast.LENGTH_SHORT).show()
+        val result = keranjangDB.addItemToCart(product)
+        if (result != -1L) {  // Check if the insertion was successful (returns row ID)
+            Toast.makeText(this, "${product.name} telah ditambahkan ke keranjang", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Gagal menambahkan ke keranjang", Toast.LENGTH_SHORT).show()
+        }
     }
+
 }
+
