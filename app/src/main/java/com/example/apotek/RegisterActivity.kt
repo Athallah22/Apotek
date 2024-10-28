@@ -9,13 +9,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class RegisterActivity : AppCompatActivity() {
-    private lateinit var dbHelper: DatabaseHelper
+    private lateinit var dbHelper: RegisterDB
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.registrasi)
 
-        dbHelper = DatabaseHelper(this)
+        dbHelper = RegisterDB(this)
 
         val registerButton: Button = findViewById(R.id.registerButton)
         val masukText: TextView = findViewById(R.id.masukText)
@@ -44,7 +44,7 @@ class RegisterActivity : AppCompatActivity() {
             }
 
             if (dbHelper.checkUsername(username)) {
-                Toast.makeText(this, "Username sudah terpakai", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Namapengguna sudah terpakai", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 

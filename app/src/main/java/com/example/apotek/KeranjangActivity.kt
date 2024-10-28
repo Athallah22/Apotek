@@ -1,7 +1,9 @@
 package com.example.apotek
 
 import KeranjangDB
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -14,6 +16,12 @@ class KeranjangActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.keranjang)
+        val addButton: Button = findViewById(R.id.addButton)
+
+        addButton.setOnClickListener {
+            val intent = Intent(this, MenuPesanActivity::class.java)
+            startActivity(intent)
+        }
 
         // Initialize database
         keranjangDB = KeranjangDB(this)
@@ -67,7 +75,6 @@ class KeranjangActivity : AppCompatActivity() {
                     updateTotalPrice()
                 }
             }
-
             // Add the inflated view to the container
             cartItemsContainer.addView(cartItemView)
         }

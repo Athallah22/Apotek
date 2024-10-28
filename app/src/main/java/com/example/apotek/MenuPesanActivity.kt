@@ -1,89 +1,91 @@
 package com.example.apotek
 
-import android.content.Context
+import KeranjangDB
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
+import android.widget.GridLayout
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 
 class MenuPesanActivity : AppCompatActivity() {
-    private lateinit var keranjang: ImageButton // Deklarasikan keranjang
+    private val productNames = arrayOf("Obat 1", "Obat 2", "Obat 3", "Obat 4", "Obat 5", "Obat 6", "Obat 7", "Obat 8")
+    private val productPrices = arrayOf("15000", "20000", "25000", "30000", "35000", "40000", "5000", "12000")
+    private val productImages = arrayOf(R.drawable.bg, R.drawable.bg, R.drawable.bg, R.drawable.bg, R.drawable.bg, R.drawable.bg, R.drawable.bg, R.drawable.bg)
+    private val productDescriptions = arrayOf("Deskripsi Obat 1", "Deskripsi Obat 2", "Deskripsi Obat 3", "Deskripsi Obat 4", "Deskripsi Obat 5", "Deskripsi Obat 6", "Deskripsi Obat 7","Deskripsi Obat 8")
+    private lateinit var keranjangDB: KeranjangDB
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.menu_pesan) // Menggunakan layout menu_pesan.xml
+        setContentView(R.layout.menu_pesan)
 
-        // Inisialisasi ImageButton keranjang menggunakan findViewById
-        keranjang = findViewById(R.id.keranjang)
+        // Inisialisasi database
+        keranjangDB = KeranjangDB(this)
 
-        // Menambahkan listener untuk ImageButton keranjang
-        keranjang.setOnClickListener {
-            val intent = Intent(this, KeranjangActivity::class.java) // Pindah ke KeranjangActivity
-            startActivity(intent)
+        val menuPesan: GridLayout = findViewById(R.id.menu_pesan)
+        val keranjangButton: ImageButton = findViewById(R.id.keranjang)
+        val backButton : ImageButton = findViewById(R.id.backButton)
+
+        // Loop melalui nama dan harga produk, membuat CardView untuk masing-masing item
+        for (i in productNames.indices) {
+            // Inflate layout product_card ke dalam View
+            val cardView = LayoutInflater.from(this).inflate(R.layout.product_card, menuPesan, false) as CardView
+
+            // Set nama, harga, dan gambar produk
+            val productNameTextView: TextView = cardView.findViewById(R.id.productName)
+            val productPriceTextView: TextView = cardView.findViewById(R.id.productPrice)
+            val productImageView: ImageView = cardView.findViewById(R.id.productImage) // Tambahkan ImageView
+            val buyButton: Button = cardView.findViewById(R.id.beli)
+
+            productNameTextView.text = productNames[i]
+            productPriceTextView.text = "Rp. ${productPrices[i]}" // Kembalikan 'Rp.' di sini
+            productImageView.setImageResource(productImages[i]) // Set gambar produk
+
+            // Tambahkan CardView ke GridLayout
+            menuPesan.addView(cardView)
+
+            // Handle klik pada CardView untuk menuju DetailActivity
+            // Saat mengklik CardView untuk detail produk
+            cardView.setOnClickListener {
+                val intent = Intent(this, DetailActivity::class.java).apply {
+                    putExtra("EXTRA_NAME", productNames[i])
+                    putExtra("EXTRA_PRICE", productPrices[i])
+                    putExtra("EXTRA_IMAGE", productImages[i])
+                    putExtra("EXTRA_DESCRIPTION", productDescriptions[i])
+                }
+                startActivity(intent)
+            }
+
+
+            // Handle button click untuk membeli produk
+            buyButton.setOnClickListener {
+                val productName = productNames[i]
+                val productPrice = productPrices[i] // Mengonversi harga ke Int
+                val productImage = productImages[i] // Ini adalah Int
+                val productDescriptions = productDescriptions[i]
+                // Tambahkan produk ke dalam keranjang (ke database)
+                keranjangDB.addItemToCart(Product(productName, productPrice, productImage, productDescriptions))
+
+                // Menampilkan pesan bahwa produk berhasil ditambahkan
+                Toast.makeText(this, "$productName berhasil ditambahkan ke keranjang", Toast.LENGTH_SHORT).show()
+            }
         }
 
-        // Mengatur klik untuk CardView
-        findViewById<CardView>(R.id.product1).setOnClickListener {
-            showDetail("Obat 1", "Rp. 15000", R.drawable.bg, "Deskripsi Obat 1")
+        // Menangani klik pada tombol keranjang untuk melihat isi keranjang
+        keranjangButton.setOnClickListener {
+            // Arahkan ke KeranjangActivity
+            startActivity(Intent(this, KeranjangActivity::class.java))
         }
 
-        findViewById<CardView>(R.id.product2).setOnClickListener {
-            showDetail("Obat 2", "Rp. 15000", R.drawable.bg, "Deskripsi Obat 2")
+        backButton.setOnClickListener {
+            // Arahkan ke KeranjangActivity
+            startActivity(Intent(this, MenuActivity::class.java))
         }
-
-        findViewById<CardView>(R.id.product3).setOnClickListener {
-            showDetail("Obat 3", "Rp. 15000", R.drawable.bg, "Deskripsi Obat 3")
-        }
-
-        findViewById<CardView>(R.id.product4).setOnClickListener {
-            showDetail("Obat 4", "Rp. 15000", R.drawable.bg, "Deskripsi Obat 4")
-        }
-
-        findViewById<CardView>(R.id.product5).setOnClickListener {
-            showDetail("Obat 5", "Rp. 15000", R.drawable.bg, "Deskripsi Obat 5")
-        }
-
-        findViewById<CardView>(R.id.product6).setOnClickListener {
-            showDetail("Obat 6", "Rp. 15000", R.drawable.bg, "Deskripsi Obat 6")
-        }
-
-        // Menambahkan listener untuk setiap tombol "Beli"
-        findViewById<Button>(R.id.beli1).setOnClickListener { addToCart("Obat 1", "$15", R.drawable.bg, "Deskripsi Obat 1") }
-        findViewById<Button>(R.id.beli2).setOnClickListener { addToCart("Obat 2", "$15", R.drawable.bg, "Deskripsi Obat 2") }
-        findViewById<Button>(R.id.beli3).setOnClickListener { addToCart("Obat 3", "$15", R.drawable.bg, "Deskripsi Obat 3") }
-        findViewById<Button>(R.id.beli4).setOnClickListener { addToCart("Obat 4", "$15", R.drawable.bg, "Deskripsi Obat 4") }
-        findViewById<Button>(R.id.beli5).setOnClickListener { addToCart("Obat 5", "$15", R.drawable.bg, "Deskripsi Obat 5") }
-        findViewById<Button>(R.id.beli6).setOnClickListener { addToCart("Obat 6", "$15", R.drawable.bg, "Deskripsi Obat 6") }
-    }
-
-    private fun addToCart(name: String, price: String, imageResId: Int, description: String) {
-        val editor = getSharedPreferences("cart_prefs", MODE_PRIVATE).edit()
-
-        // Ambil set item keranjang yang sudah ada
-        val cartItems = getSharedPreferences("cart_prefs", MODE_PRIVATE)
-            .getStringSet("cart_items", mutableSetOf()) ?: mutableSetOf()
-
-        // Buat string representasi item
-        val cartItem = "$name;$price;$description;$imageResId"
-        cartItems.add(cartItem)
-
-        // Simpan kembali ke SharedPreferences
-        editor.putStringSet("cart_items", cartItems)
-        editor.apply()
-
-        // Tampilkan Toast untuk konfirmasi
-        Toast.makeText(this, "$name telah ditambahkan ke keranjang", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun showDetail(name: String, price: String, imageResId: Int, description: String) {
-        val intent = Intent(this, DetailActivity::class.java)
-        intent.putExtra("EXTRA_NAME", name)
-        intent.putExtra("EXTRA_PRICE", price)
-        intent.putExtra("EXTRA_IMAGE", imageResId)
-        intent.putExtra("EXTRA_DESCRIPTION", description)
-        startActivity(intent)
     }
 }

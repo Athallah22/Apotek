@@ -1,9 +1,7 @@
 package com.example.apotek
 
 import KeranjangDB
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.Toast
@@ -14,6 +12,8 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var cartIcon: ImageButton
     private lateinit var binding: DetailObatBinding
     private lateinit var keranjangDB: KeranjangDB
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,23 +26,33 @@ class DetailActivity : AppCompatActivity() {
         keranjangDB = KeranjangDB(this)
 
         // Mengambil data dari Intent
-        val name = intent.getStringExtra("EXTRA_NAME") ?: "N/A"
-        val price = intent.getStringExtra("EXTRA_PRICE") ?: "N/A"
-        val imageResId = intent.getIntExtra("EXTRA_IMAGE", 0)
-        val description = intent.getStringExtra("EXTRA_DESCRIPTION") ?: "Tidak ada deskripsi"
+        val productName = intent.getStringExtra("EXTRA_NAME") ?: "N/A"
+        val productPrice = intent.getStringExtra("EXTRA_PRICE") ?: "N/A"
+        val productImageResId = intent.getIntExtra("EXTRA_IMAGE", 0)
+        val productDescription = intent.getStringExtra("EXTRA_DESCRIPTION") ?: "Tidak ada deskripsi"
 
-        val product = Product(name, price, imageResId, description)
-        binding.productImageView.setImageResource(imageResId)
-        binding.product = product
+        // Set data ke tampilan
+        binding.productImageView.setImageResource(productImageResId)
+        binding.productNameTextView.text = productName  // Mengatur nama produk
+        binding.productPriceTextView.text = "Rp. $productPrice"  // Mengatur harga produk
+        binding.productDescriptionTextView.text = productDescription  // Mengatur deskripsi produk
+
+        val product = Product(productName, productPrice, productImageResId, productDescription)
+
+        val backButton : ImageButton = findViewById(R.id.backButton)
+        backButton.setOnClickListener {
+            // Arahkan ke KeranjangActivity
+            startActivity(Intent(this, MenuPesanActivity::class.java))
+        }
 
         binding.buynow.setOnClickListener {
             addToCart(product)
         }
 
-        // Initialize cartIcon and set click listener
+        // Inisialisasi cartIcon dan set listener
         cartIcon = findViewById(R.id.cart)
         cartIcon.setOnClickListener {
-            // Start the KeranjangActivity
+            // Mulai KeranjangActivity
             val intent = Intent(this, KeranjangActivity::class.java)
             startActivity(intent)
         }
@@ -50,12 +60,10 @@ class DetailActivity : AppCompatActivity() {
 
     private fun addToCart(product: Product) {
         val result = keranjangDB.addItemToCart(product)
-        if (result != -1L) {  // Check if the insertion was successful (returns row ID)
+        if (result != -1L) {  // Periksa apakah penambahan berhasil (mengembalikan ID baris)
             Toast.makeText(this, "${product.name} telah ditambahkan ke keranjang", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(this, "Gagal menambahkan ke keranjang", Toast.LENGTH_SHORT).show()
         }
     }
-
 }
-

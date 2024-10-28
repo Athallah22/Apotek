@@ -9,13 +9,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var dbHelper: DatabaseHelper
+    private lateinit var dbHelper: RegisterDB
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login)
 
-        dbHelper = DatabaseHelper(this)
+        dbHelper = RegisterDB(this)
 
         val usernameEditText: EditText = findViewById(R.id.Username)
         val passwordEditText: EditText = findViewById(R.id.Password)
@@ -27,13 +27,14 @@ class LoginActivity : AppCompatActivity() {
             val password = passwordEditText.text.toString().trim()
 
             if (dbHelper.checkUser(username, password)) {
-                // Jika login berhasil
-                val intent = Intent(this, MenuActivity::class.java)
-                startActivity(intent)
+                val menuIntent = Intent(this, MenuActivity::class.java)
+                menuIntent.putExtra("USER_NAME", username) // Ganti dengan nama pengguna sebenarnya
+                startActivity(menuIntent)
+
                 finish() // Tutup LoginActivity agar tidak bisa kembali
             } else {
                 // Jika login gagal, tampilkan pesan
-                Toast.makeText(this, "Username atau password salah", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Namapengguna atau password salah", Toast.LENGTH_SHORT).show()
             }
         }
 

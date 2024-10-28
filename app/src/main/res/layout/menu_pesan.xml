@@ -6,33 +6,42 @@
     android:layout_height="match_parent"
     android:background="#00EAFF">
 
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/back"
+        android:background="?attr/selectableItemBackground"
+        android:scaleType="fitCenter"
+        android:contentDescription="Kembali" />
+
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="260dp"
         android:layout_height="40dp"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_margin="15dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
         android:queryHint="Cari Obat Disini"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_toEndOf="@id/backButton"
+        app:layout_constraintEnd_toEndOf="@id/backButton"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/keranjang"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="70dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
         android:layout_toEndOf="@+id/searchView"
         android:src="@drawable/cart"
         android:background="?attr/selectableItemBackground"
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.377"
         app:layout_constraintStart_toEndOf="@+id/searchView"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,354 +49,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/searchView"
+        android:background="#FFFFFF"
         android:fillViewport="true">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <GridLayout
+            android:id="@+id/menu_pesan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FFFFFF">
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/product1"
-                android:layout_width="145dp"
-                android:layout_height="270dp"
-                android:layout_margin="40dp"
-                app:cardBackgroundColor="@android:color/white"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="4dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints">
-
-                <LinearLayout
-                    android:layout_width="145dp"
-                    android:layout_height="270dp"
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    tools:layout_editor_absoluteX="250dp"
-                    tools:layout_editor_absoluteY="95dp">
-
-                    <ImageView
-                        android:id="@+id/image1"
-                        android:layout_width="match_parent"
-                        android:layout_height="130dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/bg" />
-
-                    <TextView
-                        android:id="@+id/productName1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Obat 1"
-                        android:textAlignment="center"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/productPrice1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Rp. 15000"
-                        android:textAlignment="center"
-                        android:textColor="@android:color/holo_red_dark"
-                        android:textSize="16sp" />
-
-                    <Button
-                        android:id="@+id/beli1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="#00EAFF"
-                        android:text="Beli"
-                        android:textColor="@color/black" />
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/product2"
-                android:layout_width="145dp"
-                android:layout_height="270dp"
-                android:layout_margin="40dp"
-                android:background="@drawable/border"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="4dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints">
-
-                <LinearLayout
-                    android:layout_width="145dp"
-                    android:layout_height="270dp"
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    tools:layout_editor_absoluteX="250dp"
-                    tools:layout_editor_absoluteY="95dp">
-
-                    <ImageView
-                        android:id="@+id/image2"
-                        android:layout_width="match_parent"
-                        android:layout_height="130dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/bg" />
-
-                    <TextView
-                        android:id="@+id/productName2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Obat 2"
-                        android:textAlignment="center"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/productPrice2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Rp. 15000"
-                        android:textAlignment="center"
-                        android:textColor="@android:color/holo_red_dark"
-                        android:textSize="16sp" />
-
-                    <Button
-                        android:id="@+id/beli2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="#00EAFF"
-                        android:text="Beli"
-                        android:textColor="@color/black" />
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/product3"
-                android:layout_width="145dp"
-                android:layout_height="270dp"
-                android:layout_margin="40dp"
-                app:cardBackgroundColor="@android:color/white"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="4dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/product2"
-                tools:ignore="MissingConstraints">
-
-                <LinearLayout
-                    android:layout_width="145dp"
-                    android:layout_height="270dp"
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    tools:layout_editor_absoluteX="250dp"
-                    tools:layout_editor_absoluteY="95dp">
-
-                    <ImageView
-                        android:id="@+id/image3"
-                        android:layout_width="match_parent"
-                        android:layout_height="130dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/bg" />
-
-                    <TextView
-                        android:id="@+id/productName3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:textAlignment="center"
-                        android:text="Obat 3"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/productPrice3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:layout_marginTop="8dp"
-                        android:text="Rp. 15000"
-                        android:textColor="@android:color/holo_red_dark"
-                        android:textSize="16sp" />
-
-                    <Button
-                        android:id="@+id/beli3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="#00EAFF"
-                        android:text="Beli"
-                        android:textColor="@color/black" />
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/product4"
-                android:layout_width="145dp"
-                android:layout_height="270dp"
-                android:layout_margin="40dp"
-                app:cardBackgroundColor="@android:color/white"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="4dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/product1"
-                tools:ignore="MissingConstraints">
-
-                <LinearLayout
-                    android:layout_width="145dp"
-                    android:layout_height="270dp"
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    tools:layout_editor_absoluteX="250dp"
-                    tools:layout_editor_absoluteY="95dp">
-
-                    <ImageView
-                        android:id="@+id/image4"
-                        android:layout_width="match_parent"
-                        android:layout_height="130dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/bg" />
-
-                    <TextView
-                        android:id="@+id/productName4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:textAlignment="center"
-                        android:text="Obat 4"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/productPrice4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:textAlignment="center"
-                        android:text="Rp. 15000"
-                        android:textColor="@android:color/holo_red_dark"
-                        android:textSize="16sp" />
-
-                    <Button
-                        android:id="@+id/beli4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="#00EAFF"
-                        android:text="Beli"
-                        android:textColor="@color/black" />
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/product5"
-                android:layout_width="145dp"
-                android:layout_height="270dp"
-                android:layout_margin="40dp"
-                app:cardBackgroundColor="@android:color/white"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="4dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/product3"
-                tools:ignore="MissingConstraints">
-
-                <LinearLayout
-                    android:layout_width="145dp"
-                    android:layout_height="270dp"
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    tools:layout_editor_absoluteX="250dp"
-                    tools:layout_editor_absoluteY="95dp">
-
-                    <ImageView
-                        android:id="@+id/image5"
-                        android:layout_width="match_parent"
-                        android:layout_height="130dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/bg" />
-
-                    <TextView
-                        android:id="@+id/productName5"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:textAlignment="center"
-                        android:text="Obat 5"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/productPrice5"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:textAlignment="center"
-                        android:text="Rp. 15000"
-                        android:textColor="@android:color/holo_red_dark"
-                        android:textSize="16sp" />
-
-                    <Button
-                        android:id="@+id/beli5"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="#00EAFF"
-                        android:text="Beli"
-                        android:textColor="@color/black" />
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/product6"
-                android:layout_width="145dp"
-                android:layout_height="270dp"
-                android:layout_margin="40dp"
-                app:cardBackgroundColor="@android:color/white"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="4dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/product4"
-                tools:ignore="MissingConstraints">
-
-                <LinearLayout
-                    android:layout_width="145dp"
-                    android:layout_height="270dp"
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    tools:layout_editor_absoluteX="250dp"
-                    tools:layout_editor_absoluteY="95dp">
-
-                    <ImageView
-                        android:id="@+id/image6"
-                        android:layout_width="match_parent"
-                        android:layout_height="130dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/bg" />
-
-                    <TextView
-                        android:id="@+id/productName6"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:textAlignment="center"
-                        android:text="Oabt 6"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/productPrice6"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:textAlignment="center"
-                        android:text="Rp. 15000"
-                        android:textColor="@android:color/holo_red_dark"
-                        android:textSize="16sp" />
-
-                    <Button
-                        android:id="@+id/beli6"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="#00EAFF"
-                        android:text="Beli"
-                        android:textColor="@color/black" />
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:columnCount="2"
+            android:padding="8dp"
+            android:layout_marginTop="8dp">
+        </GridLayout>
     </ScrollView>
 </RelativeLayout>
