@@ -1,8 +1,10 @@
 package com.example.apotek
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 
 class EditProfileActivity : AppCompatActivity() {
@@ -39,7 +41,7 @@ class EditProfileActivity : AppCompatActivity() {
         fullNameEditText.setText(fullName)
         emailEditText.setText(email)
         usernameEditText.setText(username)
-        passwordEditText.setText(password) // Set kata sandi saat ini
+        passwordEditText.setText(password)
 
         // Tombol simpan
         val saveButton: Button = findViewById(R.id.saveButton)
@@ -54,7 +56,17 @@ class EditProfileActivity : AppCompatActivity() {
             registerDB.updateUser(username, newFullName, newEmail, newPassword)
 
             // Kembali ke ProfileActivity dengan data yang sudah diperbarui
-            setResult(RESULT_OK)
+            val intent = Intent()
+            intent.putExtra("FULL_NAME", newFullName)
+            intent.putExtra("EMAIL", newEmail)
+            intent.putExtra("USERNAME", newUsername)
+            setResult(RESULT_OK, intent)
+            finish()
+        }
+
+        val backButton: ImageButton = findViewById(R.id.backButton)
+        backButton.setOnClickListener {
+            // Kembali ke ProfileActivity tanpa menyimpan
             finish()
         }
     }

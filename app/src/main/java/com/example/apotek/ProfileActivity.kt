@@ -3,6 +3,7 @@ package com.example.apotek
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -42,6 +43,12 @@ class ProfileActivity : AppCompatActivity() {
                 putExtra("USERNAME", currentUsername)
             }
             startActivityForResult(editIntent, EDIT_PROFILE_REQUEST_CODE)
+        }
+
+        val backButton : ImageButton = findViewById(R.id.backButton)
+        backButton.setOnClickListener {
+            // Arahkan ke KeranjangActivity
+            startActivity(Intent(this, MenuActivity::class.java))
         }
     }
 

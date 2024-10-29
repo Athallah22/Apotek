@@ -30,8 +30,7 @@ class LoginActivity : AppCompatActivity() {
                 val menuIntent = Intent(this, MenuActivity::class.java)
                 menuIntent.putExtra("USER_NAME", username) // Ganti dengan nama pengguna sebenarnya
                 startActivity(menuIntent)
-
-                finish() // Tutup LoginActivity agar tidak bisa kembali
+                finish()
             } else {
                 // Jika login gagal, tampilkan pesan
                 Toast.makeText(this, "Namapengguna atau password salah", Toast.LENGTH_SHORT).show()

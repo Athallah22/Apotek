@@ -9,109 +9,124 @@ import android.database.sqlite.SQLiteOpenHelper
 class RegisterDB(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
-        private const val DATABASE_NAME = "apotek.db"
+        private const val DATABASE_NAME = "ApotekDB.db"
         private const val DATABASE_VERSION = 1
-        private const val TABLE_USERS = "users"
-        private const val COLUMN_ID = "id"
-        private const val COLUMN_NAME = "name"
-        private const val COLUMN_EMAIL = "email"
+
+        private const val TABLE_USER = "users"
         private const val COLUMN_USERNAME = "username"
+        private const val COLUMN_FULL_NAME = "fullName"
+        private const val COLUMN_EMAIL = "email"
         private const val COLUMN_PASSWORD = "password"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
-        val createTable = ("CREATE TABLE $TABLE_USERS (" +
-                "$COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "$COLUMN_NAME TEXT," +
-                "$COLUMN_EMAIL TEXT," +
-                "$COLUMN_USERNAME TEXT UNIQUE," +
-                "$COLUMN_PASSWORD TEXT)")
-        db?.execSQL(createTable)
+        val createUserTable = "CREATE TABLE $TABLE_USER (" +
+                "$COLUMN_USERNAME TEXT PRIMARY KEY, " +
+                "$COLUMN_FULL_NAME TEXT, " +
+                "$COLUMN_EMAIL TEXT, " +
+                "$COLUMN_PASSWORD TEXT)"
+        db?.execSQL(createUserTable)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        db?.execSQL("DROP TABLE IF EXISTS $TABLE_USERS")
+        db?.execSQL("DROP TABLE IF EXISTS $TABLE_USER")
         onCreate(db)
     }
 
-    // Metode untuk menambahkan pengguna
-    fun addUser(name: String, email: String, username: String, password: String) {
+    // Fungsi untuk menambah pengguna baru
+    fun addUser(fullName: String, email: String, username: String, password: String) {
         val db = writableDatabase
-        val values = ContentValues().apply {
-            put(COLUMN_NAME, name)
+        val contentValues = ContentValues().apply {
+            put(COLUMN_FULL_NAME, fullName)
             put(COLUMN_EMAIL, email)
             put(COLUMN_USERNAME, username)
             put(COLUMN_PASSWORD, password)
         }
-        db.insert(TABLE_USERS, null, values)
-        db.close()
+        db.insert(TABLE_USER, null, contentValues)
     }
 
-    // Cek apakah nama pengguna sudah ada
+    // Fungsi untuk memeriksa apakah username sudah ada
     fun checkUsername(username: String): Boolean {
-        val db = this.readableDatabase
-        val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_USERS WHERE $COLUMN_USERNAME = ?", arrayOf(username))
+        val db = readableDatabase
+        val cursor: Cursor = db.query(TABLE_USER, arrayOf(COLUMN_USERNAME), "$COLUMN_USERNAME = ?", arrayOf(username), null, null, null)
         val exists = cursor.count > 0
         cursor.close()
         return exists
     }
 
-    // Cek apakah nama pengguna dan kata sandi sesuai
+    fun checkPassword(password: String): Boolean {
+        val db = readableDatabase
+        val cursor: Cursor = db.query(TABLE_USER, arrayOf(COLUMN_PASSWORD), "$COLUMN_PASSWORD = ?", arrayOf(password), null, null, null)
+        val exists = cursor.count > 0
+        cursor.close()
+        return exists
+    }
+
+// Fungsi untuk memeriksa apakah username dan password sesuai
     fun checkUser(username: String, password: String): Boolean {
-        val db = this.readableDatabase
-        val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_USERS WHERE $COLUMN_USERNAME = ? AND $COLUMN_PASSWORD = ?", arrayOf(username, password))
+        val db = readableDatabase
+        val cursor: Cursor = db.query(
+            TABLE_USER,
+            arrayOf(COLUMN_USERNAME),
+            "$COLUMN_USERNAME = ? AND $COLUMN_PASSWORD = ?",
+            arrayOf(username, password),
+            null,
+            null,
+            null
+        )
         val exists = cursor.count > 0
         cursor.close()
         return exists
     }
 
-    // Metode untuk mengambil data pengguna berdasarkan username
+    // Fungsi untuk mendapatkan data pengguna berdasarkan username
     fun getUserData(username: String): User {
-        val db = this.readableDatabase
-        val query = "SELECT * FROM $TABLE_USERS WHERE $COLUMN_USERNAME = ?"
-        val cursor: Cursor = db.rawQuery(query, arrayOf(username))
+        val db = readableDatabase
+        val cursor: Cursor = db.query(
+            TABLE_USER,
+            null,
+            "$COLUMN_USERNAME = ?",
+            arrayOf(username),
+            null,
+            null,
+            null
+        )
 
-        var userData = User("", "", "") // Default objek user
-
-        if (cursor.moveToFirst()) {
-            val fullName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME))
+        return if (cursor.moveToFirst()) {
+            val fullName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FULL_NAME))
             val email = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EMAIL))
-            userData = User(fullName, email, username)
+            cursor.close()
+            User(username, fullName, email, "") // Password tidak perlu ditampilkan
+        } else {
+            cursor.close()
+            throw IllegalArgumentException("User not found")
         }
-
-        cursor.close()
-        db.close()
-        return userData
     }
 
-    // Di dalam kelas RegisterDB
 
-    // Metode untuk memperbarui informasi pengguna
-    fun updateUser(username: String, fullName: String, email: String, password: String) {
+    // Fungsi untuk mendapatkan password pengguna
+    fun getPassword(username: String): String? {
+        val db = readableDatabase
+        val cursor = db.query(TABLE_USER, arrayOf(COLUMN_PASSWORD), "$COLUMN_USERNAME = ?", arrayOf(username), null, null, null)
+        return if (cursor.moveToFirst()) {
+            val password = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PASSWORD))
+            cursor.close()
+            password
+        } else {
+            cursor.close()
+            null
+        }
+    }
+
+    // Fungsi untuk memperbarui data pengguna
+    fun updateUser(username: String, fullName: String, email: String, password: String): Boolean {
         val db = writableDatabase
-        val values = ContentValues().apply {
-            put(COLUMN_NAME, fullName)
+        val contentValues = ContentValues().apply {
+            put(COLUMN_FULL_NAME, fullName)
             put(COLUMN_EMAIL, email)
             put(COLUMN_PASSWORD, password)
         }
-        db.update(TABLE_USERS, values, "$COLUMN_USERNAME = ?", arrayOf(username))
-        db.close()
+
+        return db.update(TABLE_USER, contentValues, "$COLUMN_USERNAME = ?", arrayOf(username)) > 0
     }
-
-    // Metode untuk mengambil kata sandi berdasarkan username
-    fun getPassword(username: String): String {
-        val db = this.readableDatabase
-        val query = "SELECT $COLUMN_PASSWORD FROM $TABLE_USERS WHERE $COLUMN_USERNAME = ?"
-        val cursor: Cursor = db.rawQuery(query, arrayOf(username))
-
-        var password = "" // Default password
-        if (cursor.moveToFirst()) {
-            password = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PASSWORD))
-        }
-
-        cursor.close()
-        db.close()
-        return password
-    }
-
 }

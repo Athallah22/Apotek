@@ -62,6 +62,10 @@
             android:name=".EditProfileActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".PembayaranActivity"
+            android:exported="true">
+        </activity>
 
 
 

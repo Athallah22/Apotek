@@ -17,6 +17,12 @@ class KeranjangActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.keranjang)
         val addButton: Button = findViewById(R.id.addButton)
+        val bayarButton: Button = findViewById(R.id.bayarButton)
+
+        bayarButton.setOnClickListener {
+            val intent = Intent(this, PembayaranActivity::class.java)
+            startActivity(intent)
+        }
 
         addButton.setOnClickListener {
             val intent = Intent(this, MenuPesanActivity::class.java)
